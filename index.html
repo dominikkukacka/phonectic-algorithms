@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html ng-app="ngViewExample">
+
+<head>
+    <title>algo</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <style type="text/css">
+        td, th {
+            text-align: center;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+        }
+        tr td:first-child, tr th:first-child {
+            border-left: 1px solid black;
+        }
+        tr:last-child td, tr:last-child th {
+            border-bottom: 1px solid black;
+        }
+        table {
+            margin-top: 10px;
+        }
+        tr.green td {
+            background-color: green;
+        }
+        tr.red td {
+            background-color: red;
+        }
+
+        table.yellow td {
+            background-color: yellow;
+        }
+    </style>
+</head>
+
+<body ng-controller="RowCntl">
+    <table cellspacing=0 width="60%">
+        <tr>
+            <td>
+                <label for="firstname">Firstname:</label>
+                <input id="firstname" ng-model="settings.tester.firstname" />
+            </td>
+            <td>
+                <label for="accordance">Accordance Firstname:</label>{{settings.accordance.firstname | number:2}}
+                <br />
+                <input type="range" min="0" max="1" step="0.01" ng-model="settings.accordance.firstname">
+            </td>
+            <td>
+                <label for="accordance">Weight Firstname:</label>{{settings.weight.firstname | number:2}}
+                <br />
+                <input type="range" min="1" max="10" step="1" ng-model="settings.weight.firstname">
+            </td>
+            <td rowspan="2">
+                <input type="radio" id="levenshtein" name="accordance" value="levenshtein" ng-model="settings.distance" />
+                <label for="levenshtein">Levensthein</label>
+                <br/>
+                <input type="radio" id="jarowinkler" name="accordance" value="jarowinkler" ng-model="settings.distance" />
+                <label for="jarowinkler">Jarowinkler</label>
+            </td>
+            <td rowspan="2">
+                <input type="radio" id="without" name="filter" value="without" ng-model="settings.type" />
+                <label for="without">Without</label>
+                <br/>
+                <input type="radio" id="metaphone" name="filter" value="metaphone" ng-model="settings.type" />
+                <label for="metaphone">Metaphone</label>
+                <br/>
+                <input type="radio" id="soundex" name="filter" value="soundex" ng-model="settings.type" />
+                <label for="soundex">Soundex</label>
+                <br/>
+                <input type="radio" id="colophonetics" name="filter" value="colophonetics" ng-model="settings.type" />
+                <label for="colophonetics">Colophonetics</label>
+                <!--
+                <br/>
+                <input type="radio" id="jarowinkler" name="accordance" value="jarowinkler" ng-model="settings.type" />
+                <label for="jarowinkler">Jarowinkler</label>
+                -->
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="lastname">Lastname:</label>
+                <input id="lastname" ng-model="settings.tester.lastname" />
+            </td>
+            <td>
+                <label for="accordance">Accordance Lastname:</label>{{settings.accordance.lastname | number:2}}
+                <br />
+                <input type="range" min="0" max="1" step="0.01" ng-model="settings.accordance.lastname">
+            </td>
+            <td>
+                <label for="accordance">Weight Lastname:</label>{{settings.weight.lastname | number:2}}
+                <br />
+                <input type="range" min="1" max="10" step="1" ng-model="settings.weight.lastname">
+            </td>
+        </tr>
+    </table>
+
+    <table cellspacing=0 width="60%" ng-repeat="(k,row) in rows"  ng-class="color2(k)">
+        <tr>
+            <th>#</th>
+            <th>Value</th>
+            <th>metaphone</th>
+            <th>soundex</th>
+            <th>colophonetics</th>
+            <th>accordance</th>
+            <th>accordance matched</th>
+            <th>match</th>
+        </tr>
+        <tbody>
+            <tr ng-repeat="(i, data) in row.properties" ng-class="color(row)">
+                <td>#</td>
+                <td>{{ data.value }}</td>
+                <td>{{ data.metaphone }}</td>
+                <td>{{ data.soundex }}</td>
+                <td>{{ data.colophonetics }}</td>
+                <td>{{ data.accordance | number:2 }}</td>
+                <td>{{ data.accordance_matched }}</td>
+                <td ng-if="i == 0" rowspan="2">{{ row.match }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular-animate.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular-route.min.js"></script>
+
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="levenshtein.js"></script>
+    <script type="text/javascript" src="jarowinkler.js"></script>
+    <script type="text/javascript" src="soundex.js"></script>
+    <script type="text/javascript" src="metaphone.js"></script>
+    <script type="text/javascript" src="colophonetics.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+</body>
+
+</html>
